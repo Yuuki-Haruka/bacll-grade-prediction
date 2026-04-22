@@ -297,7 +297,7 @@ config = load_model()
 st.markdown(
     """
     <div class='hero'>
-        <h1>🎓 Cambodia Grade 12 National Exam Predictor</h1>
+        <h1> Cambodia Grade 12 National Exam Predictor</h1>
         <p>Beautiful score dashboard for Bac II students. Enter subject marks, preview each subject grade, and estimate the final national exam result for Science or Social Science.</p>
     </div>
     """,
@@ -320,7 +320,7 @@ with header_right:
     st.image(HERO_IMAGE, use_container_width=True)
 
 with st.sidebar:
-    st.header("⚙️ Exam Settings")
+    st.header("Exam Settings")
     exam_type = st.selectbox("Select exam type", ["Science", "Social Science"])
     st.markdown("---")
     st.write(f"**English bonus deduction:** {config.get('english_bonus_deduction', 25)}")
@@ -357,7 +357,7 @@ with left_col:
 result_df, raw_total, final_total, final_grade = calculate_exam_result(edited_df, config)
 
 with right_col:
-    st.markdown("## 🏆 Predicted Result")
+    st.markdown("## Predicted Result")
 
     st.markdown(
         f"""
