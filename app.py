@@ -345,7 +345,7 @@ default_df = build_track_dataframe(track_subjects)
 left_col, right_col = st.columns([1.45, 1])
 
 with left_col:
-    st.markdown("### 📝 Enter Your Subject Scores")
+    st.markdown("### Enter Your Subject Scores")
     st.markdown("Edit the score column only. Maximum scores are already set based on the selected track.")
     edited_df = st.data_editor(
         default_df,
@@ -385,17 +385,17 @@ with right_col:
     st.markdown(grade_badge(final_grade), unsafe_allow_html=True)
     st.markdown("<br>", unsafe_allow_html=True)
 
-    st.markdown("### 📌 Track Summary")
+    st.markdown("### Track Summary")
     st.info(f"Current track: **{exam_type}**")
     st.success("Each subject grade is generated automatically from its maximum score range.")
 
-st.markdown("### 📚 Subject Grade Report")
+st.markdown("### Subject Grade Report")
 st.dataframe(result_df, use_container_width=True, hide_index=True)
 
 chart_col, info_col = st.columns([1.5, 1])
 
 with chart_col:
-    st.markdown("### 📊 Score Visualization")
+    st.markdown("### Score Visualization")
     if not result_df.empty:
         fig, ax = plt.subplots(figsize=(10, 5))
         ax.bar(result_df["Subject"], result_df["Score"])
@@ -407,7 +407,7 @@ with chart_col:
         st.pyplot(fig)
 
 with info_col:
-    st.markdown("### ℹ️ Grading Material")
+    st.markdown("### Grading Material")
     st.markdown("- **A**: Excellent performance")
     st.markdown("- **B**: Very good performance")
     st.markdown("- **C**: Good performance")
@@ -415,11 +415,11 @@ with info_col:
     st.markdown("- **E**: Pass")
     st.markdown("- **F**: Fail")
 
-    st.markdown("### 📥 Export Result")
+    st.markdown("### Export Result")
     csv_data = result_df.to_csv(index=False).encode("utf-8")
 
     st.download_button(
-        label="⬇️ Download CSV File",
+        label=" Download CSV File",
         data=csv_data,
         file_name="national_exam_result.csv",
         mime="text/csv",

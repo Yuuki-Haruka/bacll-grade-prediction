@@ -1,15 +1,15 @@
-# 📘 Cambodia Grade 12 National Exam Predictor
+# Cambodia Grade 12 National Exam Predictor
 
 This project is a **Streamlit web application** that predicts:
 
-- 📊 Final exam grade (A–F)
-- 📚 Grade for each subject
+- Final exam grade (A–F)
+- Grade for each subject
 
 based on the **Cambodia Grade 12 (Bac II) national exam system**.
 
 ---
 
-## 🚀 Features
+## Features
 
 - Select exam track:
   - Science
@@ -26,9 +26,9 @@ based on the **Cambodia Grade 12 (Bac II) national exam system**.
 
 ---
 
-## 🧮 Grading System
+## Grading System
 
-### 🔹 Final Grade (Total Score)
+### Final Grade (Total Score)
 
 | Grade | Score Range |
 |------|------------|
@@ -41,7 +41,7 @@ based on the **Cambodia Grade 12 (Bac II) national exam system**.
 
 ---
 
-### 🔹 Subject Grade
+### Subject Grade
 
 #### 125 Marks Subject
 
@@ -82,7 +82,7 @@ based on the **Cambodia Grade 12 (Bac II) national exam system**.
 
 ---
 
-## 🧾 Exam Formula
+## Exam Formula
 
 Final Score = Total Score - 25
 
@@ -92,19 +92,19 @@ Final Score = Total Score - 25
 
 ---
 
-## 📂 Project Structure
-# 📘 Cambodia Grade 12 National Exam Predictor
+## Project Structure
+# Cambodia Grade 12 National Exam Predictor
 
 This project is a **Streamlit web application** that predicts:
 
-- 📊 Final exam grade (A–F)
-- 📚 Grade for each subject
+- Final exam grade (A–F)
+- Grade for each subject
 
 based on the **Cambodia Grade 12 (Bac II) national exam system**.
 
 ---
 
-## 🚀 Features
+## Features
 
 - Select exam track:
   - Science
@@ -121,9 +121,9 @@ based on the **Cambodia Grade 12 (Bac II) national exam system**.
 
 ---
 
-## 🧮 Grading System
+## Grading System
 
-### 🔹 Final Grade (Total Score)
+### Final Grade (Total Score)
 
 | Grade | Score Range |
 |------|------------|
@@ -136,7 +136,7 @@ based on the **Cambodia Grade 12 (Bac II) national exam system**.
 
 ---
 
-### 🔹 Subject Grade
+### Subject Grade
 
 #### 125 Marks Subject
 
@@ -177,7 +177,7 @@ based on the **Cambodia Grade 12 (Bac II) national exam system**.
 
 ---
 
-## 🧾 Exam Formula
+## Exam Formula
 
 Final Score = Total Score - 25
 
@@ -187,7 +187,7 @@ Final Score = Total Score - 25
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 bacll-grade-prediction/
 │
 ├── app.py # Streamlit application
@@ -198,7 +198,7 @@ bacll-grade-prediction/
 
 ---
 
-## ⚙️ Installation
+## Installation
 
 ### 1. Create virtual environment
 
