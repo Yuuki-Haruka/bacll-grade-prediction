@@ -1,0 +1,4 @@
+myenv/
+__pycache__/
+*.pyc
+gpa_model.pkl
