@@ -121,10 +121,27 @@ def grade_badge(grade):
         "E": "#dc2626",
         "F": "#7f1d1d",
     }
-    return f"<div style='background:{colors.get(grade, '#334155')}; color:white; padding:14px 24px; border-radius:16px; text-align:center; font-size:28px; font-weight:700;'>{grade}</div>"
+    return f"""
+    <div style='
+        background:{colors.get(grade, "#334155")};
+        color:white;
+        padding:18px 24px;
+        border-radius:18px;
+        text-align:center;
+        font-size:42px;
+        font-weight:800;
+        box-shadow:0 10px 24px rgba(15,23,42,0.15);
+    '>
+        {grade}
+    </div>
+    """
 
 
-st.set_page_config(page_title="Cambodia Grade 12 Exam Predictor", page_icon="🎓", layout="wide")
+st.set_page_config(
+    page_title="Cambodia Grade 12 Exam Predictor",
+    page_icon="🎓",
+    layout="wide"
+)
 
 st.markdown(
     """
@@ -134,12 +151,15 @@ st.markdown(
         color: #0f172a;
         font-family: 'Segoe UI', Arial, sans-serif;
     }
+
     [data-testid="stSidebar"] {
         font-family: 'Segoe UI', Arial, sans-serif;
     }
+
     [data-testid="stSidebar"] .stExpander {
         font-family: 'Segoe UI', Arial, sans-serif;
     }
+
     [data-testid="stSidebar"] button,
     [data-testid="stSidebar"] label,
     [data-testid="stSidebar"] div,
@@ -147,6 +167,7 @@ st.markdown(
     [data-testid="stSidebar"] span {
         font-family: 'Segoe UI', Arial, sans-serif;
     }
+
     .hero {
         background: linear-gradient(135deg, #0f172a, #1d4ed8);
         padding: 28px 32px;
@@ -155,6 +176,7 @@ st.markdown(
         box-shadow: 0 12px 30px rgba(15, 23, 42, 0.18);
         margin-bottom: 18px;
     }
+
     .hero h1 {
         margin: 0;
         font-size: 2.3rem;
@@ -162,12 +184,14 @@ st.markdown(
         letter-spacing: -0.02em;
         color: white;
     }
+
     .hero p {
         margin-top: 10px;
         font-size: 1.02rem;
         opacity: 0.95;
         color: rgba(255,255,255,0.95);
     }
+
     .mini-note {
         background: #eff6ff;
         border-left: 5px solid #2563eb;
@@ -178,25 +202,91 @@ st.markdown(
         margin-bottom: 10px;
         font-size: 0.98rem;
     }
-    [data-testid="stMetricValue"] {
-        font-weight: 800;
-    }
-    [data-testid="stMetricLabel"] {
-        font-weight: 600;
-    }
+
     div.stDownloadButton > button {
-    background: linear-gradient(135deg, #3b82f6, #2563eb);  /* blue gradient */
-    color: white;
-    border-radius: 14px;
-    font-weight: 600;
-    padding: 12px;
-    border: none;
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        color: white;
+        border-radius: 14px;
+        font-weight: 600;
+        padding: 12px;
+        border: none;
     }
 
     div.stDownloadButton > button:hover {
-    background: linear-gradient(135deg, #1d4ed8, #1e40af);
-    color: white;
-    }   
+        background: linear-gradient(135deg, #1d4ed8, #1e40af);
+        color: white;
+    }
+
+    .result-card {
+        background: white;
+        border-radius: 22px;
+        padding: 22px 20px;
+        box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+        margin-bottom: 16px;
+        border: 1px solid rgba(148, 163, 184, 0.18);
+    }
+
+    .result-label {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #334155;
+        margin-bottom: 8px;
+    }
+
+    .result-value {
+        font-size: 4rem;
+        font-weight: 900;
+        line-height: 1;
+        color: #0f172a;
+        letter-spacing: -0.04em;
+    }
+
+    .result-subtext {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #64748b;
+        margin-top: 8px;
+    }
+
+    .final-score-card .result-value {
+        color: #16a34a;
+    }
+
+    .raw-score-card .result-value {
+        color: #2563eb;
+    }
+
+    @media (max-width: 768px) {
+        .hero {
+            padding: 20px 18px;
+            border-radius: 18px;
+        }
+
+        .hero h1 {
+            font-size: 1.65rem;
+        }
+
+        .hero p {
+            font-size: 0.95rem;
+        }
+
+        .result-card {
+            padding: 18px 16px;
+            border-radius: 18px;
+        }
+
+        .result-value {
+            font-size: 3.1rem;
+        }
+
+        .result-label {
+            font-size: 1rem;
+        }
+
+        .result-subtext {
+            font-size: 0.95rem;
+        }
+    }
     </style>
     """,
     unsafe_allow_html=True,
@@ -215,6 +305,7 @@ st.markdown(
 )
 
 header_left, header_right = st.columns([1.6, 1])
+
 with header_left:
     st.markdown("### Smarter exam score preview")
     st.markdown(
@@ -224,6 +315,7 @@ with header_left:
         "<div class='mini-note'><b>Formula:</b> Final Score = Total Score - 25 &nbsp; • &nbsp; <b>English</b> is treated as a bonus subject.</div>",
         unsafe_allow_html=True,
     )
+
 with header_right:
     st.image(HERO_IMAGE, use_container_width=True)
 
@@ -255,18 +347,44 @@ left_col, right_col = st.columns([1.45, 1])
 with left_col:
     st.markdown("### 📝 Enter Your Subject Scores")
     st.markdown("Edit the score column only. Maximum scores are already set based on the selected track.")
-    edited_df = st.data_editor(default_df, num_rows="fixed", use_container_width=True, hide_index=True)
+    edited_df = st.data_editor(
+        default_df,
+        num_rows="fixed",
+        use_container_width=True,
+        hide_index=True
+    )
 
 result_df, raw_total, final_total, final_grade = calculate_exam_result(edited_df, config)
 
 with right_col:
-    st.markdown("### 🏆 Predicted Result")
-    m1, m2 = st.columns(2)
-    m1.metric("Raw Total", f"{raw_total:.0f}")
-    m2.metric("Final Score", f"{final_total:.0f}")
-    st.markdown("##### Final Grade")
+    st.markdown("## 🏆 Predicted Result")
+
+    st.markdown(
+        f"""
+        <div class="result-card raw-score-card">
+            <div class="result-label">Raw Total</div>
+            <div class="result-value">{raw_total:.0f}</div>
+            <div class="result-subtext">out of {int(result_df["Max Score"].sum()):.0f}</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    st.markdown(
+        f"""
+        <div class="result-card final-score-card">
+            <div class="result-label">Final Score</div>
+            <div class="result-value">{final_total:.0f}</div>
+            <div class="result-subtext">after subtracting English bonus deduction</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    st.markdown("### Final Grade")
     st.markdown(grade_badge(final_grade), unsafe_allow_html=True)
     st.markdown("<br>", unsafe_allow_html=True)
+
     st.markdown("### 📌 Track Summary")
     st.info(f"Current track: **{exam_type}**")
     st.success("Each subject grade is generated automatically from its maximum score range.")
@@ -275,6 +393,7 @@ st.markdown("### 📚 Subject Grade Report")
 st.dataframe(result_df, use_container_width=True, hide_index=True)
 
 chart_col, info_col = st.columns([1.5, 1])
+
 with chart_col:
     st.markdown("### 📊 Score Visualization")
     if not result_df.empty:
@@ -297,7 +416,6 @@ with info_col:
     st.markdown("- **F**: Fail")
 
     st.markdown("### 📥 Export Result")
-
     csv_data = result_df.to_csv(index=False).encode("utf-8")
 
     st.download_button(
@@ -306,7 +424,6 @@ with info_col:
         file_name="national_exam_result.csv",
         mime="text/csv",
         use_container_width=True
-
     )
 
 st.markdown("---")
