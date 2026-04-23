@@ -87,6 +87,47 @@ def build_track_dataframe(track_subjects):
         }
     )
 
+def validate_scores(df):
+    df = df.copy()
+    warnings_dict = {}
+
+    cleaned_scores = []
+
+    for _, row in df.iterrows():
+        subject = row["Subject"]
+        max_score = row["Max Score"]
+        score = row["Score"]
+
+        warning_msg = None
+
+        # Empty or invalid
+        if pd.isna(score) or str(score).strip() == "":
+            warning_msg = "Score is empty. Set to 0."
+            numeric_score = 0
+        else:
+            try:
+                numeric_score = float(score)
+            except:
+                warning_msg = f"Invalid value '{score}'. Set to 0."
+                numeric_score = 0
+
+        # Negative
+        if numeric_score < 0:
+            warning_msg = "Score cannot be negative. Set to 0."
+            numeric_score = 0
+
+        # Exceed max
+        if numeric_score > max_score:
+            warning_msg = f"Score exceeds maximum ({max_score}). Adjusted to {max_score}."
+            numeric_score = max_score
+
+        if warning_msg:
+            warnings_dict[subject] = warning_msg
+
+        cleaned_scores.append(numeric_score)
+
+    df["Score"] = cleaned_scores
+    return df, warnings_dict
 
 def calculate_exam_result(df, config):
     df = df.copy()
@@ -347,6 +388,7 @@ left_col, right_col = st.columns([1.45, 1])
 with left_col:
     st.markdown("### Enter Your Subject Scores")
     st.markdown("Edit the score column only. Maximum scores are already set based on the selected track.")
+
     edited_df = st.data_editor(
         default_df,
         num_rows="fixed",
@@ -354,7 +396,62 @@ with left_col:
         hide_index=True
     )
 
-result_df, raw_total, final_total, final_grade = calculate_exam_result(edited_df, config)
+    validated_df, warnings_dict = validate_scores(edited_df)
+
+    st.markdown("### Input Feedback")
+
+    if warnings_dict:
+        for _, row in validated_df.iterrows():
+            subject = row["Subject"]
+            if subject in warnings_dict:
+                st.markdown(
+                    f"""
+                    <div style="
+                        background: #fee2e2;
+                        color: #7f1d1d;
+                        border: 1px solid #fecaca;
+                        padding: 12px 14px;
+                        border-radius: 10px;
+                        margin-bottom: 8px;
+                        font-size: 0.92rem;
+                        font-weight: 600;
+                    ">
+                        <strong>{subject}:</strong> {warnings_dict[subject]}
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
+    else:
+        st.markdown(
+            """
+            <div style="
+                background: #dcfce7;
+                color: #166534;
+                border: 1px solid #bbf7d0;
+                padding: 12px 14px;
+                border-radius: 10px;
+                margin-bottom: 8px;
+                font-size: 0.98rem;
+                font-weight: 600;
+            ">
+                All input values are valid.
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+result_df, raw_total, final_total, final_grade = calculate_exam_result(validated_df, config)
+
+# Show warnings per subject
+st.markdown("### Input Feedback")
+for _, row in validated_df.iterrows():
+    subject = row["Subject"]
+
+    if subject in warnings_dict:
+        st.warning(f"{subject}: {warnings_dict[subject]}")
+
+# Use validated data for calculation
+result_df, raw_total, final_total, final_grade = calculate_exam_result(validated_df, config)
 
 with right_col:
     st.markdown("## Predicted Result")
@@ -369,7 +466,7 @@ with right_col:
         """,
         unsafe_allow_html=True,
     )
-
+ 
     st.markdown(
         f"""
         <div class="result-card final-score-card">
